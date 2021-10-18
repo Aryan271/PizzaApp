@@ -1,69 +1,344 @@
-@import './variables';
+@import "./variables";
 
 body {
-    font-family: 'Lato', 'sans-serif';
-    -webkit-font-smoothing: antialiased;
-    color: $dark;
+  font-family: "Lato", "sans-serif";
+  -webkit-font-smoothing: antialiased;
+  color: $dark;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+// #largeNav {
+//   display: flex;
+//   flex-direction: row;
+//   width: 100%;
+// }
+
+#smallNav {
+  display: none;
+}
+
+#smallNavCart {
+  background: $primary;
+}
+
+#smallNav li a {
+  transition: $smooth;
+  &:hover {
+    color: $primary-hover;
+  }
 }
 
 nav li:last-child a {
-    background: $primary;
-    &:hover{
-        background: $primary-hover;
-    }
+  background: $primary;
+  &:hover {
+    background: $primary-hover;
+  }
 }
 
 nav li a {
-    transition: $smooth;
-    &:hover{
-        color: $primary-hover;
-    }
+  text-decoration: none;
+  transition: $smooth;
+  &:hover {
+    text-decoration: none;
+    color: $primary-hover;
+  }
 }
 
 section.hero {
-    background: $secondary;
+  background: $secondary;
 }
 
 .size {
-    background: $secondary;
+  background: $secondary;
 }
 
 .add-to-cart {
-    color: $primary;
-    border: 2px solid $primary;
-    transition: $smooth;
+  color: $primary;
+  border: 2px solid $primary;
+  transition: $smooth;
 
-    &:hover{
-        background: $primary;
-        color: $pure;
-    }
-}
-
-.primary-btn{
+  &:hover {
     background: $primary;
     color: $pure;
-    transition: $smooth;
-    &:hover{
-        background: $primary-hover;
-    }
+  }
+  &:focus {
+    outline: none;
+  }
 }
 
-section.cart{
-    background: $secondary;
+.primary-btn {
+  background: $primary;
+  color: $pure;
+  transition: $smooth;
+  &:hover {
+    background: $primary-hover;
+  }
+  &:focus {
+    outline: none;
+  }
 }
 
-.amount{
+.qty-btn {
+  background: $primary;
+  color: $pure;
+  border: 2px solid $primary;
+  transition: $smooth;
+  width: 30px;
+  height: 30px;
+  border-radius: 10px;
+
+  &:hover {
+    background: $primary-hover;
+  }
+
+  &:focus {
+    outline: none;
+  }
+}
+
+.invoice {
+  color: $primary;
+  &:focus {
+    outline: none;
+  }
+}
+
+.footer {
+  margin-top: auto;
+  width: 100%;
+}
+
+#pdf {
+  text-align: center;
+}
+
+#pdf canvas {
+  border: 1px solid black;
+  width: 95%;
+  height: auto;
+}
+
+section.cart {
+  background: $secondary;
+}
+
+.amount {
+  color: $primary;
+}
+
+section.login {
+  min-height: calc(100vh - 86px);
+  background: $secondary;
+  a {
     color: $primary;
-}
-
-section.login{
-    min-height: calc(100vh - 86px);
-    background: $secondary;
-    a {
-        color: $primary;
-        &:hover{
-            color: $primary-hover;
-        }
+    &:hover {
+      color: $primary-hover;
     }
+  }
 }
 
+.link {
+  color: $primary;
+}
+
+.paid {
+  color: rgb(0, 161, 0);
+}
+
+section.status {
+  background: $secondary;
+  min-height: calc(100vh - 86px);
+}
+
+.status-box {
+  padding: 60px 0 0;
+}
+
+.status-box ul {
+  margin-left: 84px;
+}
+
+.status-box ul li span {
+  position: relative;
+  padding-left: 20px;
+}
+
+// order status dots
+.status-box ul li span:after {
+  content: "";
+  position: absolute;
+  left: -10px;
+  top: 50%;
+  background: $dark;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  transform: translateY(-50%);
+  box-shadow: 0 0 1px 10px $secondary;
+}
+
+// order status icons
+
+.status-box ul li span::before {
+  font-family: "Line Awesome free";
+  font-size: 46px;
+  font-weight: 600;
+  position: absolute;
+  left: -90px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: inherit;
+}
+
+.status-box ul li:nth-child(1) span::before {
+  content: "\f46c";
+}
+
+.status-box ul li:nth-child(2) span::before {
+  content: "\f560";
+}
+
+.status-box ul li:nth-child(3) span::before {
+  content: "\f818";
+}
+
+.status-box ul li:nth-child(4) span::before {
+  content: "\f84a";
+}
+
+.status-box ul li:nth-child(5) span::before {
+  content: "\f582";
+}
+
+.status-box ul li {
+  position: relative;
+}
+
+// line
+.status-box ul li:before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -6px;
+  width: 2px;
+  height: 100%;
+  background: $dark;
+  margin-top: 10px;
+}
+
+.status-box ul li:nth-child(5) span:after {
+  box-shadow: 0 20px 1px 20px $secondary;
+}
+
+// line completed
+.status-box ul li.step-completed:before {
+  background: $gray;
+}
+
+// dots completed
+.status-box ul li.step-completed span:after {
+  background: $gray;
+}
+
+// text
+.status-box ul li.step-completed span {
+  color: $gray;
+}
+
+//Current status
+.status-box ul li.current span {
+  color: $primary;
+}
+
+.status-box ul li.current span:after {
+  background: $primary;
+}
+
+.status-box ul li small {
+  float: right;
+  font-size: 14px;
+  margin-top: 8px;
+}
+
+@media (max-width: 800px) {
+  .container {
+    max-width: 90%;
+  }
+  table {
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+}
+
+.StripeElement {
+  box-sizing: border-box;
+  width: 50%;
+  margin-left: auto;
+  height: 40px;
+  padding: 10px 12px;
+
+  border: 1px solid rgb(167, 167, 167);
+  border-radius: 4px;
+  background-color: white;
+
+  box-shadow: 0 1px 3px 0 #e6ebf1;
+  -webkit-transition: box-shadow 150ms ease;
+  transition: box-shadow 150ms ease;
+}
+
+.StripeElement--focus {
+  box-shadow: 0 1px 3px 0 #cfd7df;
+}
+
+.StripeElement--invalid {
+  border-color: #fa755a;
+}
+
+.StripeElement--webkit-autofill {
+  background-color: #fefde5 !important;
+}
+
+@media (max-width: 640px) {
+  .status-box ul li span:before {
+    font-size: 34px;
+    left: -80px;
+  }
+
+  .StripeElement {
+    width: 75%;
+    margin: 0 auto;
+  }
+
+  .footer {
+    font-size: 12px;
+  }
+
+  #largeNav {
+    display: none;
+  }
+
+  #smallNav {
+    display: flex;
+  }
+
+  nav li:last-child a {
+    background: none;
+    &:hover {
+      background: none;
+    }
+  }
+
+  .cartForm {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .pType {
+    margin: 0 auto;
+  }
+}

@@ -1,34 +1,167 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>la'pizza</title>
-    <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
-    <link href="https://unpkg.com/tailwindcss@^1/dist/tailwind.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="/css/app.css">
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+      integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+      crossorigin="anonymous"
+    />
+    <link
+      href="https://unpkg.com/tailwindcss@^1/dist/tailwind.min.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://maxst.icons8.com/vue-static/landings/line-awesome/line-awesome/1.3.0/css/line-awesome.min.css"
+    />
+    <link rel="stylesheet" href="/css/app.css" />
+    <script src="https://unpkg.com/pdfjs-dist/build/pdf.min.js"></script>
+    <script src="https://unpkg.com/pdfjs-dist/build/pdf.worker.min.js"></script>
+  </head>
+  <body>
+    <nav
+      class="container mx-auto flex items-center justify-between py-4"
+      id="largeNav"
+    >
+      <div>
+        <a href="/"><img src="/img/logo.png" alt="logo"/></a>
+      </div>
+      <div>
+        <ul class="flex items-center">
+          <li class="ml-6"><a href="#">Menu</a></li>
+          <li class="ml-6"><a href="#">Offers</a></li>
+          <% if(user && user.role === 'admin') { %>
+          <li class="ml-6"><a href="/admin/orders">All orders</a></li>
+          <% } else if(user && user.role === 'customer') { %>
+          <li class="ml-6"><a href="/customer/my_orders">My orders</a></li>
+          <% } %> <% if(user) { %>
+          <li class="ml-6">
+            <form id="logout" action="/logout" method="POST">
+              <a
+                onclick="document.getElementById('logout').submit()"
+                style="cursor: pointer;"
+                >Logout</a
+              >
+            </form>
+          </li>
+          <% } else { %>
+          <li class="ml-6"><a href="/register">Register</a></li>
+          <li class="ml-6"><a href="/login">Login</a></li>
+          <% } %>
+          <li class="ml-6">
+            <a href="/cart" class="inline-block px-4 py-2 rounded-full flex">
+              <span id="cartCounter" class="text-white pr-2 font-bold"
+                ><%= session.cart && session.cart.totalQty > 0 ?
+                session.cart.totalQty : '' %></span
+              >
+              <img src="/img/cart.png" alt="cart"
+            /></a>
+          </li>
+        </ul>
+      </div>
+    </nav>
 
-</head>
-<body>
-    <nav class="container mx-auto flex items-center justify-between py-4">
-        <div>
-            <img src="/img/logo.png" alt="logo">
-        </div>
-        <div>
-            <ul class="flex items-center">
-                <li class="ml-6"><a href="#">Menu</a></li>
-                <li class="ml-6"><a href="#">Offers</a></li>
-                <li class="ml-6"><a href="#">Register</a></li>
-                <li class="ml-6"><a href="#">Login</a></li>
-                <li class="ml-6"><a href="#" class="inline-block px-4 py-2 rounded-full"><img src="/img/cart.png" alt="cart"></a></li>
-            </ul>
-        </div>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light" id="smallNav">
+      <div class="flex flex-row">
+        <button
+          class="navbar-toggler border-0"
+          type="button"
+          data-toggle="collapse"
+          data-target="#navbarNav"
+          aria-controls="navbarNav"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <a class="navbar-brand" href="/"
+          ><img src="/img/logo.png" alt="logo"
+        /></a>
+      </div>
+      <a
+        href="/cart"
+        class="inline-block mt-2 ml-2 px-4 py-2 rounded-full flex"
+        id="smallNavCart"
+      >
+        <span id="cartCounter" class="text-white pr-2 font-bold"
+          ><%= session.cart && session.cart.totalQty > 0 ? session.cart.totalQty
+          : '' %></span
+        >
+        <img src="/img/cart.png" alt="cart"
+      /></a>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="nav-link" href="/">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Offers</a>
+          </li>
+          <% if(user && user.role === 'admin') { %>
+          <li class="nav-item">
+            <a class="nav-link" href="/admin/orders">All Orders</a>
+          </li>
+          <% } else if(user && user.role === 'customer') { %>
+          <li class="nav-item">
+            <a class="nav-link" href="/customer/my_orders">My Orders</a>
+          </li>
+          <% } %> <% if(user) { %>
+          <li class="nav-item">
+            <form id="logout" action="/logout" method="POST">
+              <a
+                class="nav-link"
+                onclick="document.getElementById('logout').submit()"
+                style="cursor: pointer;"
+                >Logout</a
+              >
+            </form>
+          </li>
+          <% } else { %>
+          <li class="nav-item">
+            <a class="nav-link" href="/register">Register</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/login">Login</a>
+          </li>
+          <% } %>
+        </ul>
+      </div>
     </nav>
 
     <%- body %>
-    
+    <footer class="text-center h-auto bg-black text-gray-400 p-2 footer">
+      <span>©PizzaApp by Aryan</span>
+      <div>
+        <span>SourceCode @ <a href="">Github</a></span>
+      </div>
+    </footer>
+    <script
+      src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+      integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+      integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+      integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+      crossorigin="anonymous"
+    ></script>
+    <script src="/socket.io/socket.io.js"></script>
     <script src="/js/app.js"></script>
-</body>
+  </body>
 </html>

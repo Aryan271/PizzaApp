@@ -1,4 +1,4 @@
-let mix = require('laravel-mix');
+let mix = require("laravel-mix");
 
 /*
  |--------------------------------------------------------------------------
@@ -10,8 +10,10 @@ let mix = require('laravel-mix');
  | file for your application, as well as bundling up your JS files.
  |
  */
-
-mix.js('resources/js/app.js', 'public/js/app.js').sass('resources/scss/app.scss', 'public/css/app.css');
+mix.webpackConfig({ node: { fs: "empty" } });
+mix
+  .js("resources/js/app.js", "public/js/app.js")
+  .sass("resources/scss/app.scss", "public/css/app.css");
 
 // Full API
 // mix.js(src, output);
