@@ -47971,6 +47971,7 @@ function _initStripe() {
                 mountWidget();
               } else {
                 card.destroy();
+                card = null;
               }
             }); // payment form
 
@@ -48010,12 +48011,13 @@ function _initStripe() {
                   _iterator.f();
                 }
 
-                if (!card) {
+                if (card === null) {
                   Object(_apiService__WEBPACK_IMPORTED_MODULE_3__["placeOrder"])(formObject);
                   return;
                 } // Card Payment
                 else {
                     //Verify Card
+                    console.log(card);
                     stripe.createToken(card).then(function (result) {
                       formObject.stripeToken = result.token.id;
                       Object(_apiService__WEBPACK_IMPORTED_MODULE_3__["placeOrder"])(formObject);

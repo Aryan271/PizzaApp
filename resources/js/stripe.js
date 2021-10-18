@@ -50,6 +50,7 @@ export async function initStripe() {
       mountWidget();
     } else {
       card.destroy();
+      card = null;
     }
   });
 
@@ -77,7 +78,7 @@ export async function initStripe() {
       // console.log(formObject);
       // return;
       // Cod Payment
-      if (!card) {
+      if (card === null) {
         placeOrder(formObject);
         return;
       }

@@ -14,10 +14,13 @@ const passport = require("passport");
 
 const PORT = process.env.PORT || 3000;
 
+let DB_URL = process.env.MONGO_CONNECTION_URL;
+
+// process.env.MONGO_CONNECTION_URL
 // Database Connection
 // local db url mongodb://localhost:27017/pizza
 
-mongoose.connect(process.env.MONGO_CONNECTION_URL, {
+mongoose.connect(DB_URL, {
   useNewUrlParser: true,
   useCreateIndex: true,
   useUnifiedTopology: true,
