@@ -19,6 +19,7 @@ let DB_URL = process.env.MONGO_CONNECTION_URL;
 // process.env.MONGO_CONNECTION_URL
 // Database Connection
 // local db url mongodb://localhost:27017/pizza
+// let DB_URL = "mongodb://localhost:27017/pizza";
 
 mongoose.connect(DB_URL, {
   useNewUrlParser: true,

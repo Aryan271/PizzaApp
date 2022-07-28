@@ -196,15 +196,14 @@ function invoiceData(orderId) {
   axios
     .post("/invoice", orderId)
     .then(async (res) => {
+      // console.log(res.data);
       generateData(res.data[0]);
-
-      console.log(res);
 
       const result = await easyinvoice.createInvoice(data);
       easyinvoice.download("invoice.pdf", result.pdf);
     })
     .catch((err) => {
-      console.log(err);
+      console.log(err, err.message);
       notyf.error("Something Went Wrong!");
     });
 }
@@ -213,6 +212,7 @@ if (render_btn) {
   render_btn.forEach((btn) => {
     btn.addEventListener("click", (e) => {
       let orderId = btn.dataset;
+      console.log(orderId);
       invoiceData(orderId);
     });
   });
