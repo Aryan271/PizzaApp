@@ -12,8 +12,8 @@ const flash = require("express-flash");
 const MongoDBStore = require("connect-mongo")(session);
 const passport = require("passport");
 
-//const PORT = process.env.PORT || 3000;
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
+// const PORT = 3000;
 
 let DB_URL = process.env.MONGO_CONNECTION_URL;
 
