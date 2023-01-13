@@ -1,2 +1,2 @@
 # PizzaApp
-http://pizza24by7.herokuapp.com/
+https://pizzaapp.onrender.com/
